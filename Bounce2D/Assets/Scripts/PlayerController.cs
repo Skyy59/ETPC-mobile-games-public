@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour
     public float rayLength = 1f;
     public LayerMask rayMask;
 
+    public float waterSpeed = 1f;
+    public float waterJumpForce = 2f;
+    public float waterGravityScale = 0.3f;
+    private bool _isInWater = false;
+
     private Rigidbody2D _rigidbody;
     private Vector2 _velocity = Vector2.zero;
     private float _input;
@@ -19,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private int _health = 5;
     private int _checkpoints = 0;
-    private int _maxCheckpoints = 0; 
+    private int _maxCheckpoints = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,11 +45,26 @@ public class PlayerController : MonoBehaviour
     {
         _input = UnityEngine.Input.GetAxisRaw("Horizontal");
 
-        _grounded = Physics2D.Raycast(transform.position, Vector2.down, rayLength, rayMask);
 
-        if (UnityEngine.Input.GetButtonDown("Jump") && _grounded)
+        if (!_isInWater)
         {
-            _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            _grounded = Physics2D.Raycast(transform.position, Vector2.down, rayLength, rayMask);
+        }
+        else
+        {
+            _grounded = false;
+        }
+
+        if (UnityEngine.Input.GetButtonDown("Jump"))
+        {
+            if (_isInWater)
+            {
+                _rigidbody.AddForce(Vector2.up * waterJumpForce, ForceMode2D.Impulse);
+            }
+            else if (_grounded)
+            {
+                _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
     }
 
@@ -52,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         _velocity = _rigidbody.linearVelocity;
 
-        if(_input != 0)
+        if (_input != 0)
         {
             _velocity.x = Mathf.MoveTowards(_velocity.x, _input * speed, acceleration * Time.fixedDeltaTime);
         }
@@ -61,12 +81,19 @@ public class PlayerController : MonoBehaviour
             _velocity.x = Mathf.MoveTowards(_velocity.x, 0, friction * Time.fixedDeltaTime);
         }
 
+        if (_isInWater)
+        {
+
+            float maxVerticalSpeed = 2f;
+            _velocity.y = Mathf.Clamp(_velocity.y, -maxVerticalSpeed, maxVerticalSpeed);
+        }
+
         _rigidbody.linearVelocity = _velocity;
     }
 
     public void Respawn()
     {
-        if(Checkpoint.current != null)
+        if (Checkpoint.current != null)
         {
             this.transform.position = Checkpoint.current.transform.position;
             Time.timeScale = 1f;
@@ -77,11 +104,11 @@ public class PlayerController : MonoBehaviour
     public void Kill()
     {
         _health = _health - 1;
-        
+
         UIController.instance.SetHealths(_health);
         Debug.Log(_health);
 
-        if(_health > 0)
+        if (_health > 0)
         {
             GameStateManager.instance.ChangeGameState(GameStateManager.GameState.OVER);
         }
@@ -118,5 +145,23 @@ public class PlayerController : MonoBehaviour
     public void SetHealth(int health)
     {
         _health = health;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            _isInWater = true;
+            _rigidbody.gravityScale = waterGravityScale;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            _isInWater = false;
+            _rigidbody.gravityScale = 1f;
+        }
     }
 }
