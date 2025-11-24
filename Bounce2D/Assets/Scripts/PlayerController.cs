@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float waterJumpForce = 2f;
     public float waterGravityScale = 0.3f;
     private bool _isInWater = false;
+    private float _maxVerticalSpeed = 2f;
 
     private Rigidbody2D _rigidbody;
     private Vector2 _velocity = Vector2.zero;
@@ -83,9 +84,7 @@ public class PlayerController : MonoBehaviour
 
         if (_isInWater)
         {
-
-            float maxVerticalSpeed = 2f;
-            _velocity.y = Mathf.Clamp(_velocity.y, -maxVerticalSpeed, maxVerticalSpeed);
+            _velocity.y = Mathf.Clamp(_velocity.y, -_maxVerticalSpeed, _maxVerticalSpeed);
         }
 
         _rigidbody.linearVelocity = _velocity;
