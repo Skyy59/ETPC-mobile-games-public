@@ -31,6 +31,8 @@ public class SlingshotController : MonoBehaviour
         _currentTarget = _currentBird.transform;
 
         instance = this;
+
+
     }
 
     // Update is called once per frame
