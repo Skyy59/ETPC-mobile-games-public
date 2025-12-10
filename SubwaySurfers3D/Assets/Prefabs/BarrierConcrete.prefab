@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 634056700121628404}
   - component: {fileID: 6829057375712239577}
   - component: {fileID: 5475682286623229759}
-  - component: {fileID: 4569967989993105954}
-  m_Layer: 0
+  - component: {fileID: 3302635546953383919}
+  m_Layer: 6
   m_Name: BarrierConcrete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,8 +333,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4101335692308608796}
   m_Mesh: {fileID: 0}
---- !u!64 &4569967989993105954
-MeshCollider:
+--- !u!65 &3302635546953383919
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -351,7 +351,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 0.5}
+  m_Center: {x: -0.5, y: 0, z: 0}

@@ -16,13 +16,20 @@ public class PlayerController : MonoBehaviour
     public float slideHeight = 0.5f;
     public float slideTime = 1f;
 
+    public float hitDistance = 0.1f;
+    public LayerMask collisionLayerMask;
+    public float speedIncremental = 0.01f;
+
     // Lane change
     [HideInInspector] public int currentLane = 1;
 
     private bool _isSliding = false;
+    private bool _isAlive = true;
     private float _currentGravity = 0f;
     private Vector3 targetPosition;
     private CharacterController _charCtr;
+
+    private float timeIncrement = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,13 +59,18 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Slide());
         }
+
+        CheckHealth();
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
         ComputeGravity();
 
-        Vector3 forwardMove = Vector3.forward * forwardSpeed * Time.fixedDeltaTime;
+        timeIncrement += Time.fixedDeltaTime * speedIncremental;
+        float forwardFinalSpeed = forwardSpeed + timeIncrement;
+
+        Vector3 forwardMove = Vector3.forward * forwardFinalSpeed * Time.fixedDeltaTime;
         Vector3 verticalMove = Vector3.up * _currentGravity;
         Vector3 horizontalMove = Vector3.MoveTowards(_charCtr.transform.position, targetPosition, laneSwapSpeed * Time.fixedDeltaTime);
         horizontalMove = new Vector3(horizontalMove.x - transform.position.x, 0, 0);
@@ -113,5 +125,22 @@ public class PlayerController : MonoBehaviour
         render.transform.localPosition = Vector3.up;
 
         _isSliding = false;
+    }
+
+    public void CheckHealth()
+    {   
+        RaycastHit hit;
+        Vector3 p1 = transform.position;
+        Vector3 p2 = p1 + Vector3.up * _charCtr.height;
+
+        if(Physics.CapsuleCast(p1, p2, _charCtr.radius, transform.forward, out hit, hitDistance, collisionLayerMask))
+        {
+            if(_isAlive)
+            {
+                Debug.Log("Detect collision");
+                GameStateManager.Instance.ChangeGameState(GameState.StateType.OVER);
+                _isAlive = false;
+            }
+        }
     }
 }
