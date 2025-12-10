@@ -1540,7 +1540,7 @@ GameObject:
   - component: {fileID: 1375011934}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1583,10 +1583,11 @@ MonoBehaviour:
   gravity: -2.81
   slideHeight: 0.4
   slideTime: 1
-  hitDistance: 0.2
+  hitDistance: 0.5
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  speedIncremental: 0.01
   currentLane: 1
 --- !u!143 &1375011935
 CharacterController:

@@ -133,11 +133,11 @@ public class PlayerController : MonoBehaviour
         Vector3 p1 = transform.position;
         Vector3 p2 = p1 + Vector3.up * _charCtr.height;
 
-        if(Physics.CapsuleCast(p1, p2, _charCtr.radius, transform.forward, out hit, hitDistance, collisionLayerMask))
+        if(Physics.CapsuleCast(p1, p2, _charCtr.radius, transform.forward, out hit, hitDistance, collisionLayerMask, QueryTriggerInteraction.Ignore))
         {
             if(_isAlive)
             {
-                Debug.Log("Detect collision");
+                Debug.Log("Detect collision " + hit.collider, hit.collider);
                 GameStateManager.Instance.ChangeGameState(GameState.StateType.OVER);
                 _isAlive = false;
             }

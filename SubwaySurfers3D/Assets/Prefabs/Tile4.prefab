@@ -10776,10 +10776,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2228874656698497538, guid: 4fceb207bb703d144823548a9d4ef42c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8395068941142896892}
+    - targetCorrespondingSourceObject: {fileID: 2228874656698497538, guid: 4fceb207bb703d144823548a9d4ef42c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5140580772013950244}
   m_SourcePrefab: {fileID: 100100000, guid: 4fceb207bb703d144823548a9d4ef42c, type: 3}
 --- !u!4 &551760731703401853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5031560052420844487, guid: 4fceb207bb703d144823548a9d4ef42c, type: 3}
   m_PrefabInstance: {fileID: 4790579050687481530}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6671242765932018872 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2228874656698497538, guid: 4fceb207bb703d144823548a9d4ef42c, type: 3}
+  m_PrefabInstance: {fileID: 4790579050687481530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8395068941142896892
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671242765932018872}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 64}
+  m_Center: {x: 0.5, y: 1, z: -24.53}
+--- !u!114 &5140580772013950244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671242765932018872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e119242fbe0f060438664820b8fbeb4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrainMover
