@@ -23,7 +23,7 @@ public class BirdBlackController : BirdController
             DetectAlive();
             DrawTrace();
 
-            if (!_hasExploded && Input.GetKeyDown(KeyCode.Space))
+            if (!_hasExploded && Input.GetMouseButtonDown(0))
             {
                 TriggerExplosion();
             }
@@ -105,7 +105,7 @@ public class BirdBlackController : BirdController
 
     private void OnDrawGizmosSelected()
     {
-        // Debug visual radius
+        
         Gizmos.color = new Color(1f, 0, 0, 0.3f);
         Gizmos.DrawSphere(transform.position, explosionRadius);
     }
